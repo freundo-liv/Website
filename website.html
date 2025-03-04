@@ -1,0 +1,113 @@
+<!-- creating a website that lists a bunch of services we offer with a drop-down menu 
+(we dont have the names yet, just make them up for now) and adds up the prices to give a subtotal.
+edit: like 5 drop down menus bc we have like 200 services -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--this specifies the character encoding for the webpage. 
+    it tells the browser to use UTF-8, a universal character edcoding that supports almost all characters, 
+    icluding special symbbols and different langauges-->
+    <meta charset="UTF-8">
+    <!--'viewport' helps make the webpage look good on all screen sizes-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>------------------</title>
+    <link href="style.css" type="text/css" rel="stylesheet" /> <!--styling the webpage-->
+</head>
+
+<body>
+
+    <h1>Services We Offer</h1>
+
+    <!--div groups elements. this helps with styling and javascript interaction-->
+    <div id="service-selectors"></div>
+
+    <h2>Selected Services:</h2>
+    <!--ul = unordered list. id attribute is to uniquely identify an element on a webpage. can only use one per page-->
+    <ul id="service-list"></ul>
+    <!--span is an INline container... it is like div but it doesn't break onto a new line. used for styling small sections of text
+    as we can see as we are uniquely styling the subtotal but not the whole line-->
+    <h3>Subtotal: $<span id="subtotal">0</span></h3>
+
+    <!-- include a reset button-->
+    <button onclick="resetSelection()">Reset</button>
+
+    <script>
+        let subtotal = 0;
+
+        //different services for each dropdown
+        const serviceCategories = [
+            [
+                { name: "A", price: 100 },
+                { name: "B", price: 75 },
+                { name: "C", price: 80 },
+                { name: "D", price: 120 },
+                { name: "E", price: 120 }
+            ],
+            [
+                { name: "F", price: 150 },
+                { name: "G", price: 50 },
+                { name: "H", price: 90 },
+                { name: "I", price: 120 },
+                { name: "J", price: 120 }
+            ],
+            [
+                { name: "K", price: 130 },
+                { name: "L", price: 60 },
+                { name: "M", price: 80 },
+                { name: "N", price: 75 },
+                { name: "O", price: 120 }
+            ],
+            [
+                { name: "P", price: 110 },
+                { name: "Q", price: 95 },
+                { name: "R", price: 85 },
+                { name: "S", price: 120 },
+                { name: "T", price: 50 }
+            ],
+            [
+                { name: "U", price: 200 },
+                { name: "V", price: 175 },
+                { name: "W", price: 140 },
+                { name: "X", price: 110 },
+                { name: "Y", price: 60 }
+            ]
+        ];
+
+        const container = document.getElementById("service-selectors");
+
+        //create dropdowns dynamically
+        serviceCategories.forEach((services, index) => {
+            let select = document.createElement("select");
+            select.id = `services${index + 1}`;
+
+            //default option
+            let defaultOption = document.createElement("option");
+            defaultOption.value = "0";
+            defaultOption.textContent = `Choose a Service`;
+            select.appendChild(defaultOption);
+
+            //add service options
+            services.forEach(service => {
+                let option = document.createElement("option");
+                option.value = service.price;
+                option.textContent = `${service.name} - $${service.price}`;
+                select.appendChild(option);
+            });
+
+            //create button
+            let button = document.createElement("button");
+            button.textContent = "Add Service";
+            button.onclick = () => addService(select.id);
+
+            //append to container
+            container.appendChild(document.createElement("br"));
+            container.appendChild(select);
+            container.appendChild(button);
+        });
+
+    </script>
+    <script src="script.js"></script> <!--integrates js page-->
+
+</body>
+</html>
